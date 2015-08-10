@@ -22,6 +22,6 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>SpringModel</finalName>
+    <finalName>springdome</finalName>
   </build>
 </project>
