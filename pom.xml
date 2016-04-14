@@ -80,7 +80,7 @@
 				</os>
 			</activation>
 			<properties>
-				<log.basedir>~/javalogs</log.basedir>
+				<log.basedir>/home/eagle/workstation/logs</log.basedir>
 			</properties>
 		</profile>
 		<profile>
