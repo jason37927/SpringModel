@@ -1,59 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+        http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
           init-method="init" destroy-method="close">
         <property name="url" value="${jdbcUrl}"/>
         <property name="username" value="${user}"/>
         <property name="password" value="${password}"/>
-        <property name="maxActive">
-            <value>10</value>
-        </property>
-        <property name="initialSize">
-            <value>1</value>
-        </property>
-        <property name="maxWait">
-            <value>60000</value>
-        </property>
-        <property name="minIdle">
-            <value>1</value>
-        </property>
-        <property name="timeBetweenEvictionRunsMillis">
-            <value>60000</value>
-        </property>
-        <property name="minEvictableIdleTimeMillis">
-            <value>300000</value>
-        </property>
-        <property name="validationQuery">
-            <value>SELECT 'x'</value>
-        </property>
-        <property name="testWhileIdle">
-            <value>true</value>
-        </property>
-        <property name="testOnBorrow">
-            <value>false</value>
-        </property>
-        <property name="testOnReturn">
-            <value>false</value>
-        </property>
-        <property name="poolPreparedStatements">
-            <value>true</value>
-        </property>
-        <property name="maxOpenPreparedStatements">
-            <value>20</value>
-        </property>
+        <property name="maxActive" value="10"/>
+        <property name="initialSize" value="1"/>
+        <property name="maxWait" value="60000"/>
+        <property name="minIdle" value="1"/>
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxOpenPreparedStatements" value="20"/>
         <property name="removeAbandoned" value="true"/>
         <property name="removeAbandonedTimeout" value="1800"/>
         <property name="logAbandoned" value="false"/>
     </bean>
 
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <property name="dataSource" ref="dataSource"></property>
+        <property name="dataSource" ref="dataSource"/>
     </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
