@@ -12,6 +12,6 @@
 	<!-- 解析配置文件 -->
 	<context:property-placeholder
 		ignore-resource-not-found="true" system-properties-mode="OVERRIDE"
-		location="classpath:config/properties/*.properties,file:/webser/java_webapps/webunion/config/admin-config.properties" />
+		location="classpath:config/properties/*.properties"/>
 
 </beans>

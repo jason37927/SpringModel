@@ -42,7 +42,7 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:config/jdbc/mybatis.xml"/>
-        <!--         <property name="mapperLocations" value="classpath:com/stnts/webunion/mybatis/**/*.xml"/> -->
+        <property name="mapperLocations" value="classpath:com/eagle/springdome/mybatis/**/*.xml"/>
     </bean>
 
     <mybatis:scan base-package="com.eagle.springdome.mapper" annotation="org.springframework.stereotype.Repository"/>
