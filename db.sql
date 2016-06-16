@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS `admin_roles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `role_name` VARCHAR(50) NOT NULL COMMENT '角色名称',
   `remark` VARCHAR(100) NULL COMMENT '备注',
+  `status` TINYINT(4) NOT NULL DEFAULT 0 COMMENT '状态(0-正常,1-禁用)',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 COMMENT = '权限管理角色';
