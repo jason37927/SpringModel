@@ -8,6 +8,7 @@ import com.eagle.springdome.entity.Account;
 import com.eagle.springdome.entity.query.AccountQuery;
 import com.eagle.springdome.mapper.AccountMapper;
 import com.eagle.springdome.util.MD5Encrypt;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,13 +59,13 @@ public class TestController{
         this.accountMapper.updateByPrimaryKeySelective(account);
         //test insert data
         Account accountEntity = new Account();
-        accountEntity.setEmail("topeagle@163.com");
-        accountEntity.setMobileNumber("11011011011");
-        accountEntity.setPassword("123456");
+        accountEntity.setEmail(RandomStringUtils.random(6,Boolean.TRUE,Boolean.TRUE) + "@163.com");
+        accountEntity.setMobileNumber(RandomStringUtils.randomNumeric(11));
+        accountEntity.setPassword(MD5Encrypt.md5(accountEntity.getEmail() + "123456"));
         accountEntity.setRegTime(new Date());
         accountEntity.setStatus(CommonConstants.ACCOUNT_STATUS_ENABLED);
         accountEntity.setNickName("eagle");
-//        this.accountMapper.insert(accountEntity);
+        this.accountMapper.insert(accountEntity);
         return "index";
     }
 
