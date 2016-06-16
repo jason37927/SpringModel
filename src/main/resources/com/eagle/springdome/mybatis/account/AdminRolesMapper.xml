@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eagle.springdome.mapper.AdminRolesMapper">
+    <resultMap id="BaseResultMap" type="com.eagle.springdome.entity.AdminRoles">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,role_name,remark,status
+    </sql>
+
+    <sql id="orderByPart">
+        <if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+    </sql>
+
+    <sql id="limitPart">
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </sql>
+
+    <sql id="condition">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="roleNameFuzzy != null"> and role_name LIKE concat('%',#{roleNameFuzzy},'%')</if>
+            <if test="status != null"> and status = #{status}</if>
+        </trim>
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from admin_roles
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="matchConditionsResults" resultMap="BaseResultMap" parameterType="com.eagle.springdome.entity.query.AdminRolesQuery">
+        select
+        <include refid="Base_Column_List"/>
+        FROM admin_roles
+        <include refid="condition" />
+        <include refid="orderByPart" />
+        <include refid="limitPart" />
+    </select>
+
+    <select id="matchConditionsResultsCount" resultType="java.lang.Integer" parameterType="com.eagle.springdome.entity.query.AdminRolesQuery">
+        SELECT count(1) FROM admin_roles
+        <include refid="condition" />
+    </select>
+
+    <insert id="insert" parameterType="com.eagle.springdome.entity.AdminRoles">
+        insert into admin_roles (role_name, remark, status)
+        values (#{role_name,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.eagle.springdome.entity.AdminRoles">
+        update admin_roles
+        <set >
+            <if test="roleName != null" >
+                role_name = #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM admin_roles WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+
+</mapper>
