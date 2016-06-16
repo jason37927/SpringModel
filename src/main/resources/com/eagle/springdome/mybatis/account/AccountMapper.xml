@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eagle.springdome.mapper.AccountMapper">
+    <resultMap id="BaseResultMap" type="com.eagle.springdome.entity.Account">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="mobileNumber" column="mobile_number" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="regTime" column="reg_time" jdbcType="TIMESTAMP"/>
+        <result property="nickName" column="nick_name" jdbcType="VARCHAR" />
+        <result property="status" column="status" jdbcType="TINYINT" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,email,mobile_number,password,reg_time,nick_name,status
+    </sql>
+
+    <sql id="orderByPart">
+        <if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+    </sql>
+
+    <sql id="limitPart">
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </sql>
+
+    <sql id="condition">
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id != null"> and id = #{id}</if>
+            <if test="email != null"> and email = #{email}</if>
+            <if test="mobileNumber != null"> and mobile_number = #{mobileNumber}</if>
+            <if test="nickName != null"> and nick_name = #{nickName}</if>
+            <if test="status != null"> and status = #{status}</if>
+        </trim>
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from account
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="matchConditionsResults" resultMap="BaseResultMap" parameterType="com.eagle.springdome.entity.query.AccountQuery">
+        select
+        <include refid="Base_Column_List"/>
+        FROM account
+        <include refid="condition" />
+        <include refid="orderByPart" />
+        <include refid="limitPart" />
+    </select>
+
+    <select id="matchConditionsResultsCount" resultType="java.lang.Integer" parameterType="com.eagle.springdome.entity.query.AccountQuery">
+        SELECT count(1) FROM account
+        <include refid="condition" />
+    </select>
+
+    <insert id="insert" parameterType="com.eagle.springdome.entity.Account">
+        insert into account (email, mobile_number,
+        password, reg_time, nick_name,
+        status)
+        values (#{email,jdbcType=VARCHAR}, #{mobileNumber,jdbcType=VARCHAR},
+        #{password,jdbcType=VARCHAR}, #{regTime,jdbcType=TIMESTAMP}, #{nickName,jdbcType=VARCHAR},
+        #{status,jdbcType=TINYINT})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.eagle.springdome.entity.Account">
+        update account
+        <set >
+            <if test="mobileNumber != null" >
+                mobile_number = #{mobileNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileNumber == null" >
+                mobile_number = null,
+            </if>
+            <if test="password != null" >
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null" >
+                nick_name = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>
