@@ -13,7 +13,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = '账号表';
 
-CREATE TABLE IF NOT EXISTS `account_access_system`.`admin_roles` (
+CREATE TABLE IF NOT EXISTS `admin_roles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `role_name` VARCHAR(50) NOT NULL COMMENT '角色名称',
   `remark` VARCHAR(100) NULL COMMENT '备注',
