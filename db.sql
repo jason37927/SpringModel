@@ -1,5 +1,5 @@
-CREATE TABLE IF NOT EXISTS `account` (
-  `id` BIGINT(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `admin_user` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(150) NOT NULL COMMENT '注册时的email账号',
   `mobile_number` VARCHAR(25) NULL COMMENT '绑定手机号',
   `password` VARCHAR(64) NOT NULL COMMENT '登陆密码(MD5+salt)',
